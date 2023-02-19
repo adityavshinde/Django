@@ -1,0 +1,61 @@
+{% extends 'shop/basic.html' %}
+{% block title %}Shop{% endblock %}
+{% block css %}{% endblock %}
+
+{% block body %}
+  {% load static %}
+       <!--Slide Show Starts Here-->
+        {% for product, range, nslides in allProds %}
+          <div class="container">
+            <div class="row">
+            <div id="demo{{forloop.counter}}" class="col carousel slide my-4" data-ride="carousel">
+                <ul class="carousel-indicators">
+                    <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
+                    {% for i in range %}
+                    <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}"></li>
+                    {% endfor %}
+                </ul>
+              <h4 class="my-4">{{product.0.category}}</h4>
+            <div class="container carousel-inner no-padding">
+                <div class="carousel-item active">                   
+                    {% for i in product %}                    
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                      
+                        <div class="card align-items-center" style="width: 18rem;">
+                          <a href="/shop/prodview/{{i.id}}">
+                            <img src="/media/{{i.image}}" class="card-img-top" alt="...">  
+                          </a>                          
+                            <div class="card-body">
+                                <a href="/shop/prodview/{{i.id}}">
+                                <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h5>
+                                </a>
+                                <a href="/shop/prodview/{{i.id}}">
+                                <p class="card-text">{{i.desc|slice:"0:80"}}...</p>
+                                </a>
+                                <span id="divpr{{i.id}}" class="divpr">
+                                <button id="pr{{i.id}}" class="btn btn-primary cart">Add to Cart</button>
+                                </span>
+                                <a href="/shop/prodview/{{i.id}}"><button id="qv{{i.id}}" class="btn btn-primary">Quick View</button></a>
+                            </div>
+                        </div>
+                      
+                    </div>
+                    {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+                </div><div class="carousel-item">
+                    {% endif %}
+                    {% endfor %}
+            </div>
+            </div>
+            <!--left and right controls-->
+          <a class="carousel-control-prev" href="#demo{{forloop.counter}}" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </a>
+          <a class="carousel-control-next" href="#demo{{forloop.counter}}" data-slide="next">
+              <span class="carousel-control-next-icon"></span>
+          </a>
+        </div>   
+        {% endfor %}
+      </div>
+      </div> 
+{% endblock %}
+{% block js %}{% endblock %}

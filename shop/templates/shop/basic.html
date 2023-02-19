@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>
+    {% block title %}{% endblock %}
+    </title>
+    <style>
+        .col-md-3
+        {
+            display: inline-block;
+            margin-left: -4px;
+        }
+        .col-md-3 img{
+            max-width:137px;
+            height:200px;
+        }
+        .carousel-indicators .active {
+          background-color: blue;
+            }
+        a{
+          text-decoration:none;
+          color: black;
+          }                
+        body carousel-indicator li{
+            background-color: deepskyblue;
+        }
+        body carousel-indicator{
+          bottom:auto;
+        }
+        a:hover{
+          color: red;
+        }
+        .carousel-control-prev{
+          background-color: #082c63;
+          height: 50px;
+          width: 50px;
+          top: 200px;
+        }
+        .carousel-control-next{
+          background-color: #082c63;
+          height: 50px;
+          width: 50px;
+          top: 200px;
+        }
+        .nav-search-field .nav-input {
+          height: 38px;
+          width: 300px;
+        }
+        .bi{
+          color:aliceblue;
+        }
+        .form-group{
+        width:700px;
+        align-content:center;
+        }
+        body carousel-control-prev-icon{
+        background-color: blue;
+        }
+        body carousel-control-next-icon{
+        background-color: blue;
+        }
+        body .no-padding{
+            padding-left: 0;
+            padding-right: 0;
+        }
+    </style>
+    {% block css %}{% endblock %}
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background-color:#082c63;">
+      <a class="navbar-brand" href="/shop">
+      <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-basket3-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M10.243 1.071a.5.5 0 0 1 .686.172l3 5a.5.5 0 0 1-.858.514l-3-5a.5.5 0 0 1 .172-.686zm-4.486 0a.5.5 0 0 0-.686.172l-3 5a.5.5 0 1 0 .858.514l3-5a.5.5 0 0 0-.172-.686z"/>
+        <path d="M13.489 14.605A.5.5 0 0 1 13 15H3a.5.5 0 0 1-.489-.395L1.311 9H14.69l-1.201 5.605z"/>
+        <rect width="16" height="2" y="6" rx=".5"/>
+      </svg>
+      </a>
+        <a class="navbar-brand mx-1" href="/shop">Home Cart</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/shop">Home </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/shop/about">About Us<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/shop/tracker">Tracking Status</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/shop/contact">Contact Us</a>
+            </li>            
+          </ul>         
+          <form class="form-inline my-2 my-lg-0 nav-search-field">
+            <input class="form-control mr-sm-2 nav-input" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+          <button type="button" id="popcart" class="btn btn-secondary mx-3" data-html="true" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Cart">
+            Cart(<span id="cart">0</span>)
+          </button>
+        </div>
+      </nav>
+      {% block body %}{% endblock %}
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  {% block js %}{% endblock %}
+  <script>
+    console.log('working');
+    if(localStorage.getItem('cart') == null){
+      var cart = {};
+    }
+    else
+    {
+      cart = JSON.parse(localStorage.getItem('cart'));
+      updateCart(cart);
+    }
+  
+    //$('.cart').click(function(){
+      $('.divpr').on('click', 'button.cart', function(){
+      console.log('clicked');
+      var idstr = this.id.toString();
+      console.log(idstr);
+      if(cart[idstr] !=undefined){
+        cart[idstr] = cart[idstr] + 1;
+      }
+      else{
+        cart[idstr] = 1;
+      }
+      console.log(cart);
+      updateCart(cart);
+    });
+    $('#popcart').popover();
+    updatePopover(cart);
+    function updatePopover(cart)
+    {
+      console.log('We are inside updatePopover');
+      var popStr = "";
+      popStr = popStr + "<h5>Items in your cart are:</h5><div class='mx-2 my-2'>";
+      var i=1;
+      for(var item in cart){
+        popStr = popStr + "<b>" + i + "</b>. ";
+        popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0,19) + "...Qty: " + cart[item] + '<br>';
+        i = i + 1;    
+      }
+      popStr = popStr + "</div> <a href='/shop/checkout'><button class='btn btn-primary' id ='checkout'>Checkout</button></a> <button class='btn btn-primary' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+      console.log(popStr);
+      document.getElementById('popcart').setAttribute('data-content', popStr);
+      $('#popcart').popover('show');
+    }
+
+    function clearCart(){
+      cart = JSON.parse(localStorage.getItem('cart'));
+      for (var item in cart){
+        document.getElementById('div' + item).innerHTML = '<button id="'+ item +'" class="btn btn-primary cart">Add to Cart</button>'
+      }
+      localStorage.clear();
+      cart = {};
+      updateCart(cart);
+    }
+
+    function updateCart(cart) {
+      console.log(cart);
+      var sum = 0;
+      for(var item in cart){
+        sum = sum + cart[item];
+        document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cart[item] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+      }
+      localStorage.setItem('cart',JSON.stringify(cart));
+      document.getElementById('cart').innerHTML = sum;
+      updatePopover(cart);
+      }
+
+    $('.divpr').on("click", "button.minus", function(){
+      console.log('minus clicked');
+      a = this.id.slice(7, );
+      cart['pr'+a] = cart['pr'+a] - 1;
+      cart['pr'+a] = Math.max(0, cart['pr'+a]);
+      document.getElementById('valpr'+a).innerHTML = cart['pr'+a];
+      updateCart(cart);
+    });
+    $('.divpr').on("click", "button.plus", function(){
+      console.log('plus clicked');
+      a = this.id.slice(6, );
+      cart['pr'+a] = cart['pr'+a] + 1;
+      document.getElementById('valpr'+a).innerHTML = cart['pr'+a];
+      updateCart(cart);
+    });
+  </script> 
+  </body>
+</html>
